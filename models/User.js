@@ -13,14 +13,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    createdOn:{
-        type:Date,
+    createdOn: {
+        type: Date,
         default: Date.now
     },
     savedPassword: [
         {
-            type: mongoose.Schema.type.ObjectId,
-            ref: password
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'password'
         }
     ]
 },
