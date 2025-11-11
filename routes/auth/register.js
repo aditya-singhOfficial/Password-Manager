@@ -10,9 +10,9 @@ Router.use(express.urlencoded({ extended: true }));
 Router.post("/register", async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        console.log({ name, email, password });
+        console.log({ name, email, dateOfBirth, password });
 
-        if (!name || !email || !password)
+        if (!name || !email || !password || !dateOfBirth)
             return res
                 .status(400)
                 .json({ error: `Incomplete Request`, success: false })
@@ -41,6 +41,7 @@ Router.post("/register", async (req, res) => {
         const newUser = await User.create({
             name,
             email,
+            dateOfBirth,
             password: hash
         });
 
