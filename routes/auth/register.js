@@ -9,8 +9,7 @@ Router.use(express.urlencoded({ extended: true }));
 
 Router.post("/register", async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-        console.log({ name, email, dateOfBirth, password });
+        const { name, email, dateOfBirth, password } = req.body;
 
         if (!name || !email || !password || !dateOfBirth)
             return res
