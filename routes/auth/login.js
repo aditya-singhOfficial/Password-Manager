@@ -1,9 +1,11 @@
 const express = require("express")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const cookieParser = require("cookie-parser")
 const User = require("../../models/User")
 
 const Router = express.Router();
+Router.use(cookieParser())
 
 Router.post("/login", async (req, res) => {
     try {
@@ -26,7 +28,7 @@ Router.post("/login", async (req, res) => {
                 .json({ error: `Invalid Credentials`, success: false })
 
         const jwtToken = await jwt.sign({ id: userExists._id, email }, process.env.JWT_SECRET, { expiresIn: "1d" })
-
+        res.cookie("userLogged", jwtToken);
         res.status(200)
             .json({
                 message: `User LogedIN Successfulyy`, success: true, user: {
@@ -39,5 +41,13 @@ Router.post("/login", async (req, res) => {
         res.status(500).json({ error: `Internal Server Error`, success: false })
     }
 })
+
+function isLoggedIn(req, res, next) {
+    if (req.cookies == "")
+        return res.status(400).json({ error: `You Must Log In First` })
+    const data = jwt.verify(req.cookies.userLogged, process.env.JWT_SECRET);
+    req.user = data;
+    next();
+}
 
 module.exports = Router;

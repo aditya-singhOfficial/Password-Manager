@@ -1,9 +1,13 @@
 const express = require("express");
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+const cookieParser = require("cookie-parser")
 const User = require("../../models/User");
 const Router = express.Router();
 
-Router.put("/forget", async (req, res) => {
+Router.use(cookieParser());
+
+Router.put("/forget", isLoggedIn, async (req, res) => {
     const { name, email, dateOfBirth, newPassword } = req.body;
     if (!name || !email || !dateOfBirth || !newPassword)
         return res.status(400).json({ error: `Incomplete data`, success: false });
@@ -19,7 +23,17 @@ Router.put("/forget", async (req, res) => {
     const hashPass = bcrypt.hash(newPassword, 10);
     userExists.password = await hashPass;
     await userExists.save();
-    return res.status(200).json({ error: `Password Frogetted Successfully`, success: true })
+    return res.status(200).json({ message: `Password Frogetted Successfully`, success: true })
 })
+
+function isLoggedIn(req, res, next) {
+    if (req.cookies == "")
+        return res.status(400).json({ error: `You Must Log In First` })
+    const data = jwt.verify(req.cookies.userLogged, process.env.JWT_SECRET);
+    console.log(data);
+    
+    req.user = data;
+    next();
+}
 
 module.exports = Router;

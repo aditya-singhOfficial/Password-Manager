@@ -32,17 +32,16 @@ Router.post("/register", async (req, res) => {
                 .status(400)
                 .json({ error: `User already exists`, success: false })
         const hash = await bcrypt.hash(password, 10);
-        const payload = {
-            email,
-        };
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 60 * 60 });
-        res.cookie("UserID", token);
+
         const newUser = await User.create({
             name,
             email,
             dateOfBirth,
             password: hash
         });
+
+        const jwtToken = await jwt.sign({ id: newUser._id, email }, process.env.JWT_SECRET, { expiresIn: "1d" })
+        res.cookie("userLogged", jwtToken);
 
         return res.status(201).json({ message: `User Registered Successfully`, success: true, newUser });
     } catch (error) {
