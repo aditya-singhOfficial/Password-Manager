@@ -13,7 +13,7 @@ Router.get("/fetchPassword/:id", isLoggedIn, async (req, res) => {
         passes.savedPassword.forEach((jsonData) => {
             console.log(jsonData);
         })
-        res.status(200).json({ message: `Saved Password are Fetched`, success: true });
+        res.status(200).json({ message: `Saved Password are Fetched`, success: true, passwords: passes.savedPassword });
     } catch (error) {
         console.log(`Failed to fetch passwords`, error);
         return res.status(500).json({ error: `Internal Server Error` });
@@ -24,7 +24,6 @@ function isLoggedIn(req, res, next) {
     if (req.cookies == "")
         return res.status(400).json({ error: `You Must Log In First` })
     const data = jwt.verify(req.cookies.userLogged, process.env.JWT_SECRET);
-    console.log(data);
 
     req.user = data;
     next();
