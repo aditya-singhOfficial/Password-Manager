@@ -1,8 +1,7 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt")
 const cookieParser = require("cookie-parser");
 const User = require("./../models/User")
+const jwt = require("jsonwebtoken")
 const PasswordModel = require("./../models/Password")
 const Router = express.Router();
 Router.use(cookieParser());
@@ -18,12 +17,11 @@ Router.post("/savePassword/:id", isLoggedIn, async (req, res) => {
         if (userNameAlreadyExists && userNameAlreadyExists.userName == userName)
             return res.status(400).json({ error: `This password for ${userName} already exists in DB`, success: false })
 
-        const hashPass = await bcrypt.hash(password, 10);
 
         const passDb = await PasswordModel.create({
             siteName,
             userName,
-            password: hashPass,
+            password,
             user: id
         })
 

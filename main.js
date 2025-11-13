@@ -11,6 +11,7 @@ const forgetRoute = require("./routes/auth/forget.js")
 const logoutRoute = require("./routes/auth/logout.js")
 const savePasswordRoute = require("./routes/savePassword.js")
 const fetchPasswordRoute = require("./routes/fetchPassword.js")
+const fetchSpecificPasswordRoute = require("./routes/fetchSpecificPassword.js")
 const isLoggedIn = require("./middlewares/isLoggedIN.js")
 const fetchPasswordServices = require("./services/fetchPassowrd.js")
 const app = express();
@@ -30,11 +31,12 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/profile", isLoggedIn, async (req, res) => {
-    const userAndPasswords = await fetchPasswordServices(req.user.email)
-    console.log(userAndPasswords);
 
+    const userAndPasswords = await fetchPasswordServices(req.user.email)
     // TODO: fetch password from /api/fetchpassword
-    res.render("profile", { name: userAndPasswords.name, passwords: userAndPasswords.savedPassword });
+    res.render("profile", { name: userAndPasswords.name, passwords: userAndPasswords.savedPassword },
+
+    );
 })
 
 app.use("/api/auth", registerRoute);
@@ -42,6 +44,7 @@ app.use("/api/auth", loginRoute);
 app.use("/api/auth", forgetRoute);
 app.use("/api/auth", logoutRoute);
 app.use("/api", savePasswordRoute);
+app.use("/api", fetchSpecificPasswordRoute);
 app.use("/api", fetchPasswordRoute);
 
 

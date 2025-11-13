@@ -2,6 +2,16 @@
 
 :root {
   --primary-color: #0c111d;
+  --secondary-color: #1a2335;
+  --Primary-Text: #f1f5f9;
+  --Secondary-Text: #94a3b8;
+  --Disabled-Emphasis: #64748b;
+  --border-color: #334155;
+  --success-color: #22c55e;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --background-light-color: #111827;
+  --card-background-color: #1e293b;
 }
 
 * {
