@@ -3,119 +3,139 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-      }
-
-      .passwordConatiner {
-        padding: 2vh 3vw;
-        width: 100%;
-        min-height: 90%;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr;
-      }
-
-      .passwordCard {
-        width: 25vw;
-        border-radius: 0.6vw;
-        height: fit-content;
-        padding: 0.6vh 0.4vw;
-        display: flex;
-        border: 1px solid gray;
-        overflow: hidden;
-      }
-
-      .siteImg {
-        width: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .siteImg img {
-        width: 75%;
-      }
-
-      .siteNameAndPass {
-        width: 65%;
-        display: flex;
-        gap: 2vh;
-        flex-direction: column;
-      }
-
-      .siteName {
-        height: 35%;
-        font-size: 1.4vw;
-        display: flex;
-        align-items: center;
-      }
-
-      .usernameAndPasswordAndButton {
-        display: flex;
-        gap: 2vh;
-        flex-direction: column;
-        height: 65%;
-      }
-
-      .usernameAndPassword {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .usernameAndPassword span {
-        font-size: 1.25vw;
-      }
-
-      .showPasswordBtn {
-        display: flex;
-        justify-content: center;
-      }
-
-      .showPasswordBtn a {
-        text-decoration: none;
-        border-radius: 25px;
-        background-color: #b5b3fb;
-        columns: #f0effe;
-        padding: 0.4vw;
-      }
-    </style>
+    <title>PROFILE | <%= name%></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/global.css" />
+    <link rel="stylesheet" href="/stylesheets/profileStyle.css" />
   </head>
   <body>
-    <h1>This is profile <%= name%></h1>
-    <div class="passwordConatiner">
-      <%passwords.forEach((password)=>{ %>
-      <div class="passwordCard">
-        <div class="siteImg">
-          <img src=https://www.<%=password.siteName%>/favicon.ico alt="" />
+    <div class="main">
+      <div class="nav">
+        <div class="navUserName">
+          <div class="userImg">
+            <img
+              src="https://png.pngtree.com/element_our/20200610/ourmid/pngtree-black-default-avatar-image_2237212.jpg"
+              alt=""
+            />
+          </div>
+          <h2>WELCOME <%=name%> !</h2>
         </div>
-        <div class="siteNameAndPass">
-          <div class="siteName"><%=password.siteName%></div>
-          <div class="usernameAndPasswordAndButton">
-            <div class="usernameAndPassword">
-              <span><%=password.userName%></span>
-              <span>*******</span>
+
+        <button id="logout-action">LOG OUT</button>
+      </div>
+      <div class="profileContainer">
+        <div class="profile-left">
+          <div class="profile-leftInput">
+            <i class="ri-search-line"></i>
+            <input type="text" placeholder="Looking  For" />
+          </div>
+          <div class="headingOfpassword">Saved Passwords:</div>
+
+          <div class="profile-leftPasswords">
+            <%passwords.forEach((password)=>{ %>
+            <div class="passwordCard">
+              <div class="siteName">
+                <p><%= password.siteName.split(".")[0]%></p>
+                <p><%= password.userName%></p>
+              </div>
+              <div class="copyBtn">
+                <i
+                  id="<%= password._id%>"
+                  class="copyPassword ri-file-copy-line"
+                ></i>
+                <i id="<%= password._id%>" class="showPassword ri-eye-line"></i>
+              </div>
             </div>
-            <div class="showPasswordBtn">
-              <a href="#">Show Button</a>
+            <% }) %>
+          </div>
+        </div>
+        <div class="profile-right">
+          <div class="profileRightSitename">
+            <p>Google</p>
+            <div class="profileRightSitenameBtn">
+              <i class="ri-star-fill"></i>
+              <button>Edit</button>
             </div>
+          </div>
+          <div class="siteuserName">
+            <p>Username / Email:</p>
+            <p>aditya@aditya.com</p>
+          </div>
+          <div class="sitePassword">
+            <p>Password:</p>
+            <p>aditya@aditya.com</p>
+          </div>
+          <div class="siteURL">
+            <p>Site URL:</p>
+            <p>aditya@aditya.com</p>
           </div>
         </div>
       </div>
-      <%}) %>
     </div>
+    <script>
+      const logout = document.querySelector("#logout-action");
+      logout.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          await fetch("/api/auth/logout");
+          alert("User Logged Out successfully!");
+        } catch (err) {
+          console.log(`Failed to logout`, err);
+          alert("Logout Failed");
+        } finally {
+          window.location.reload();
+        }
+      });
 
-    <script></script>
+      const showPasswordBoxes = document.querySelectorAll(".showPassword");
+      console.log(showPasswordBoxes);
+      showPasswordBoxes.forEach((showPassword) => {
+        showPassword.addEventListener("click", async (e) => {
+          const response = await fetch(`/api/fetchOnePassword/${e.target.id}`);
+          const data = await response.json();
+          console.log(data.password.siteName);
+          const prfileRightContent = `
+          <div class="profileRightSitename">
+            <p>${data.password.siteName.split(".")[0]}</p>
+            <div class="profileRightSitenameBtn">
+              <i class="ri-star-fill"></i>
+              <button>Edit</button>
+            </div>
+          </div>
+          <div class="siteuserName">
+            <p>Username / Email:</p>
+            <p>${data.password.userName}</p>
+          </div>
+          <div class="sitePassword">
+            <p>Password:</p>
+            <p>${data.password.password}</p>
+          </div>
+          <div class="siteURL">
+            <p>Site URL:</p>
+            <p>https://www.${data.password.siteName}</p>
+          </div>
+        `;
+          const profileRightContainer = (document.querySelector(
+            ".profile-right"
+          ).innerHTML = prfileRightContent);
+        });
+      });
+
+      const copyPasswordBoxes = document.querySelectorAll(".copyPassword");
+      console.log(copyPasswordBoxes);
+      copyPasswordBoxes.forEach((copyPassword) => {
+        copyPassword.addEventListener("click", async (e) => {
+          console.log(e.target.id);
+          const response = await fetch(`/api/fetchOnePassword/${e.target.id}`);
+          const data = await response.json();
+          const text = data.password.password;
+          console.log(text)
+          navigator.clipboard.writeText(text).then(() => alert("Copied!"));
+        });
+      });
+    </script>
   </body>
 </html>
