@@ -4,11 +4,13 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("../../models/User");
 
-Router.use(express.json());
 Router.use(express.urlencoded({ extended: true }));
+Router.use(express.json());
 
 Router.post("/register", async (req, res) => {
     try {
+        console.log(req.body);
+        
         const { name, email, dateOfBirth, password } = req.body;
 
         if (!name || !email || !password || !dateOfBirth)

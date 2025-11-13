@@ -3,19 +3,15 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const User = require("./../models/User")
 const password = require("./../models/Password")
+const fetchPasswordServices = require("../services/fetchPassowrd")
 const Router = express.Router();
 Router.use(cookieParser());
 Router.use(express.json());
-Router.get("/fetchPassword/:id", isLoggedIn, async (req, res) => {
+Router.get("/fetchPassword", isLoggedIn, (req, res) => {
     try {
-        const { id, email } = req.user;
-        const passes = await User.findOne({ email }).populate("savedPassword").exec();
-        passes.savedPassword.forEach((jsonData) => {
-            console.log(jsonData);
-        })
+        fetchPasswordServices();
         res.status(200).json({ message: `Saved Password are Fetched`, success: true, passwords: passes.savedPassword });
     } catch (error) {
-        console.log(`Failed to fetch passwords`, error);
         return res.status(500).json({ error: `Internal Server Error` });
     }
 });
@@ -24,7 +20,6 @@ function isLoggedIn(req, res, next) {
     if (req.cookies == "")
         return res.status(400).json({ error: `You Must Log In First` })
     const data = jwt.verify(req.cookies.userLogged, process.env.JWT_SECRET);
-
     req.user = data;
     next();
 }

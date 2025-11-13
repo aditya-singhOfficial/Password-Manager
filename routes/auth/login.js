@@ -5,16 +5,21 @@ const cookieParser = require("cookie-parser")
 const User = require("../../models/User")
 
 const Router = express.Router();
+Router.use(express.json());
+Router.use(express.urlencoded({ extended: true }))
 Router.use(cookieParser())
+
 
 Router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log(email, password);
+
         if (!email || !password)
             return res
                 .status(400)
                 .json({ error: `Incomplete Request`, success: false });
-        const userExists = await User.findOne({ email });
+        const userExists = await User.findOne({ email: email.trim() });
         if (!userExists)
             return res
                 .status(400)
@@ -36,18 +41,13 @@ Router.post("/login", async (req, res) => {
                     name: userExists.name,
                     email: userExists.email
                 }, jwtToken
-            })
+            });
     } catch (error) {
-        res.status(500).json({ error: `Internal Server Error`, success: false })
-    }
-})
+        console.log(error);
 
-function isLoggedIn(req, res, next) {
-    if (req.cookies == "")
-        return res.status(400).json({ error: `You Must Log In First` })
-    const data = jwt.verify(req.cookies.userLogged, process.env.JWT_SECRET);
-    req.user = data;
-    next();
-}
+        res.status(500).json({ error: `Internal Server Chud gya`, success: false })
+    }
+});
+
 
 module.exports = Router;

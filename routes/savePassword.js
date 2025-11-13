@@ -14,9 +14,8 @@ Router.post("/savePassword/:id", isLoggedIn, async (req, res) => {
         if (!siteName || !userName || !password)
             return res.status(400).json({ error: `Incomplete Request`, success: false })
 
-        const userNameAlreadyExists = await PasswordModel.findOne({ userName });
-
-        if (userNameAlreadyExists && siteName == userNameAlreadyExists.siteName)
+        const userNameAlreadyExists = await PasswordModel.findOne({ siteName });
+        if (userNameAlreadyExists && userNameAlreadyExists.userName == userName)
             return res.status(400).json({ error: `This password for ${userName} already exists in DB`, success: false })
 
         const hashPass = await bcrypt.hash(password, 10);
@@ -44,7 +43,6 @@ function isLoggedIn(req, res, next) {
     if (req.cookies == "")
         return res.status(400).json({ error: `You Must Log In First` })
     const data = jwt.verify(req.cookies.userLogged, process.env.JWT_SECRET);
-
     req.user = data;
     next();
 }

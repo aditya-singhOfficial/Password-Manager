@@ -1,0 +1,198 @@
+.main {
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.1px;
+  display: flex;
+}
+
+.companyDetails {
+  width: 50vw;
+  /* padding: 3.8vh 0 6.8vh 0; */
+  height: 75vh;
+    padding: 4vh 2vw;
+
+  height: 100vh;
+  background-color: var(--primary-color);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.companyLogo {
+  width: 20vw;
+  height: 10%;
+  gap: 2vw;
+  display: flex;
+}
+
+.logoImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.logoImg img {
+  height: 95%;
+}
+
+.logoName {
+  width: 60%;
+}
+
+.logoName p {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.companyCenter {
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  text-align: center;
+}
+
+.companyCenter h2 {
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+.companyCenter h4 {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.companyFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+}
+
+.companyFooter a {
+  text-decoration: none;
+  text-align: center;
+  width: 17vw;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 5vw;
+  font-size: 1.35rem;
+  color: #fff;
+  font-weight: 900;
+  background-color: #e4aae2;
+  background: linear-gradient(to right, #3677e6, #3a79e5);
+  padding: 1vh 1vw;
+}
+
+.formDiv {
+  width: 50vw;
+  background-color: var(--primary-color);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transform: scaleX(-1);
+}
+
+.formConatiner {
+  width: 30vw;
+  height: 75vh;
+  padding: 4vh 2vw;
+  background-color: #fff;
+  margin: auto;
+  margin-top: 10vh;
+  border-radius: 12px;
+  transform: scaleX(-1);
+}
+
+.formConatiner h1 {
+  text-align: center;
+  color: #000;
+  margin-bottom: 4vh;
+  font-size: 2rem;
+}
+
+form {
+  height: 70%;
+}
+
+.formConatiner .formElem {
+  height: 20%;
+  margin-bottom: 5.5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.formConatiner .formElem label {
+  color: black;
+  font-size: 1.34rem;
+}
+.formConatiner .formElem .formElemInput {
+  position: relative;
+  width: 100%;
+}
+.formConatiner .formElem .formElemInput i {
+  color: black;
+  position: absolute;
+  top: 32%;
+  font-size: 1.34rem;
+}
+
+.formConatiner .formElem .formElemInput input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 2vh 2vw;
+  font-size: 1.34rem;
+  border-bottom: 1px solid #8a9198;
+}
+
+.formConatiner form a {
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  font-size: 1rem;
+  text-align: right;
+  margin-bottom: 2.5vh;
+}
+
+.formConatiner input[type="submit"] {
+  width: 100%;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 5vw;
+  font-size: 1.35rem;
+  color: #fff;
+  font-weight: 900;
+  background-color: #e4aae2;
+  background: linear-gradient(to right, #3677e6, #3a79e5);
+  padding: 1vh 1vw;
+}
+
+.signUpContainer {
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vh;
+  flex-direction: column;
+}
+
+.signUpContainer p {
+  color: #5b575a;
+  font-size: 1.1rem;
+}
+
+.signUpContainer a {
+  text-decoration: none;
+  font-size: 1.24rem;
+}

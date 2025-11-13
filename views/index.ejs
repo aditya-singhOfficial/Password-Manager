@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/global.css" />
+    <link rel="stylesheet" href="/stylesheets/indexPage.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="companyDetails">
+        <div class="companyLogo">
+          <div class="logoImg">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3539/3539752.png"
+              alt=""
+            />
+          </div>
+          <div class="logoName">
+            <p>password</p>
+            <p>manager</p>
+          </div>
+        </div>
+        <div class="companyCenter">
+          <h2>Transparent & Secured</h2>
+          <h4>Only you can see your personal data</h4>
+        </div>
+        <div class="companyFooter">
+          <a href="/signup">Create New Account</a>
+          <a href="/">Sign IN</a>
+        </div>
+      </div>
+      <div class="formDiv">
+        <div class="formConatiner">
+          <h1>LOG IN</h1>
+          <form id="loginForm" method="post">
+            <div class="formElem">
+              <label for="email">Email</label>
+              <div class="formElemInput">
+                <i class="ri-user-fill"></i>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Type your email"
+                />
+              </div>
+            </div>
+            <div class="formElem">
+              <label for="password">Password</label>
+              <div class="formElemInput">
+                <i class="ri-lock-line"></i>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Type your password"
+                />
+              </div>
+            </div>
+            <a href="/routes/auth/forget.js">Forget Passowrd ?</a>
+            <input type="submit" value="LOGIN" />
+          </form>
+          <div class="signUpContainer">
+            <p>or sing up Using</p>
+            <a href="/signup">SIGN UP</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const form = document.querySelector("#loginForm");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formObj = Object.fromEntries(new FormData(form));
+        const response = await fetch("/api/auth/login", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formObj),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          alert(data.error ?? "Failed to login");
+          window.location.href = "/";
+          return;
+        } else {
+          window.location.href = "/profile";
+          return;
+        }
+      });
+    </script>
+  </body>
+</html>

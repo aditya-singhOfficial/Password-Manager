@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/stylesheets/global.css" />
+    <link rel="stylesheet" href="/stylesheets/profileStyle.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="companyDetails">
+        <div class="companyLogo">
+          <div class="logoImg">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3539/3539752.png"
+              alt=""
+            />
+          </div>
+          <div class="logoName">
+            <p>password</p>
+            <p>manager</p>
+          </div>
+        </div>
+        <div class="companyCenter">
+          <h2>Transparent & Secured</h2>
+          <h4>Only you can see your personal data</h4>
+        </div>
+        <div class="companyFooter">
+          <a href="/signup">Create New Account</a>
+          <a href="/">Sign IN</a>
+        </div>
+      </div>
+      <div class="formDiv">
+        <div class="formConatiner">
+          <h1>SIGN UP</h1>
+          <form id="registerForm" method="post">
+            <div class="formElem">
+              <label for="name">Name</label>
+              <div class="formElemInput">
+                <i class="ri-user-fill"></i>
+                <input type="text" name="name" placeholder="Type your name" />
+              </div>
+            </div>
+            <div class="formElem">
+              <label for="email">Email</label>
+              <div class="formElemInput">
+                <i class="ri-user-fill"></i>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Type your email"
+                />
+              </div>
+            </div>
+            <div class="formElem">
+              <label for="dob">Date Of Birth:</label>
+              <div class="formElemInput">
+                <i class="ri-user-fill"></i>
+                <input
+                  type="text"
+                  name="dateOfBirth"
+                  placeholder="Type your DOB [YYYY-MM-DD]"
+                />
+              </div>
+            </div>
+            <div class="formElem">
+              <label for="password">Password</label>
+              <div class="formElemInput">
+                <i class="ri-lock-line"></i>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Type your password"
+                />
+              </div>
+            </div>
+            <a href="/routes/auth/forget.js">Forget Passowrd ?</a>
+            <input type="submit" value="SIGN UP" />
+          </form>
+          <div class="signUpContainer">
+            <p>or sing in Using</p>
+            <a href="/">SIGN IN</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const form = document.querySelector("#registerForm");
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const signupFormObj = Object.fromEntries(new FormData(form));
+        console.log(signupFormObj);
+
+        const response = await fetch("/api/auth/register", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signupFormObj),
+        });
+
+        if (!response.ok) {
+          alert(response.error ?? "Failed to create User");
+          window.location.href = "/signup";
+          return;
+        } else {
+          window.location.href = "/";
+          return;
+        }
+      });
+    </script>
+  </body>
+</html>
