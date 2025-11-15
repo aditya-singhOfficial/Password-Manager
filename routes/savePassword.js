@@ -1,4 +1,4 @@
-const express = require("express");
+    const express = require("express");
 const cookieParser = require("cookie-parser");
 const User = require("./../models/User")
 const jwt = require("jsonwebtoken")
@@ -8,8 +8,10 @@ Router.use(cookieParser());
 Router.use(express.json());
 Router.post("/savePassword/:id", isLoggedIn, async (req, res) => {
     try {
+        console.log(req.body);
+
         const { siteName, userName, password } = req.body;
-        const { id, email } = req.user;
+        const { id } = req.params.id;
         if (!siteName || !userName || !password)
             return res.status(400).json({ error: `Incomplete Request`, success: false })
 
@@ -25,7 +27,7 @@ Router.post("/savePassword/:id", isLoggedIn, async (req, res) => {
             user: id
         })
 
-        const userExists = await User.findOne({ email });
+        const userExists = await User.findOne({ id });
         userExists.savedPassword.push(passDb._id);
 
         userExists.save();

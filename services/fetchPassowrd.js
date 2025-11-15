@@ -4,7 +4,7 @@ const fetchPassword = async (email) => {
     try {
         const passes = await user.findOne({ email }).populate("savedPassword").exec();
         passes.savedPassword.forEach((jsonData) => {
-            console.log(jsonData);
+            // console.log(JSON.stringify(jsonData.user));
         })
         return passes;
     } catch (error) {

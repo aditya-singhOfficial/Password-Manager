@@ -168,9 +168,82 @@
 }
 
 .profile-right {
-  width: 48%;
+  width: 50%;
+  /* border: 1px solid var(--border-color); */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 2vw;
+  padding: 2vh 2.8vw;
+}
+
+.savePasswordContainer {
+  width: 100%;
   border: 1px solid var(--border-color);
-  height: 80%;
+  height: 40%;
+  border-radius: 2vw;
+  padding: 2vh 2.8vw;
+}
+
+.savePasswordContainer form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.saveSiteName,
+.saveUserName,
+.savePassword,
+.saveButton {
+  width: 100%;
+  height: 23%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1vw;
+}
+
+.saveSiteName label,
+.saveUserName label,
+.savePassword label {
+  font-size: 1.5rem;
+}
+
+.saveSiteName input,
+.saveUserName input,
+.savePassword input {
+    width: 75%;
+    height: 75%;
+    outline: none;
+    border: none;
+    font-size: 1.34rem;
+    padding: 1vh 1vw;
+    border-radius: 0.5vw;
+    color: var(--Primary-Text);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: var(--secondary-color);
+}
+
+.saveButton{
+  justify-content: center;
+}
+.saveButton input{
+  padding: 0.6vh 1.5vw;
+  border-radius: 25px;
+  font-size: 1.6rem;
+  border: none;
+  outline: none;
+  color: var(--Primary-Text);
+  background-color: #8b5cf6;
+}
+
+.ShowPasswordContainer {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  height: 58%;
   border-radius: 2vw;
   padding: 2vh 2.8vw;
 }
@@ -231,7 +304,8 @@
   font-size: 1.7rem;
 }
 
-.siteuserName p:last-child,.sitePassword p:last-child,
+.siteuserName p:last-child,
+.sitePassword p:last-child,
 .siteURL p:last-child {
   font-size: 1.2rem;
   color: var(--Secondary-Text);

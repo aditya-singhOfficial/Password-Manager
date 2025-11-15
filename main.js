@@ -13,7 +13,8 @@ const savePasswordRoute = require("./routes/savePassword.js")
 const fetchPasswordRoute = require("./routes/fetchPassword.js")
 const fetchSpecificPasswordRoute = require("./routes/fetchSpecificPassword.js")
 const isLoggedIn = require("./middlewares/isLoggedIN.js")
-const fetchPasswordServices = require("./services/fetchPassowrd.js")
+const fetchPasswordServices = require("./services/fetchPassowrd.js");
+const { log } = require("console");
 const app = express();
 dotenv.config();
 connectToDB();
@@ -33,8 +34,13 @@ app.get("/signup", (req, res) => {
 app.get("/profile", isLoggedIn, async (req, res) => {
 
     const userAndPasswords = await fetchPasswordServices(req.user.email)
+
     // TODO: fetch password from /api/fetchpassword
-    res.render("profile", { name: userAndPasswords.name, passwords: userAndPasswords.savedPassword },
+    res.render("profile", {
+        name: userAndPasswords.name,
+        passwords: userAndPasswords.savedPassword,
+        userID: req.user.id
+    },
 
     );
 })

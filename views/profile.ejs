@@ -21,7 +21,7 @@
               alt=""
             />
           </div>
-          <h2>WELCOME <%=name%> !</h2>
+          <h2 class="userNameID" id="<%=userID%>">WELCOME <%=name%> !</h2>
         </div>
 
         <button id="logout-action">LOG OUT</button>
@@ -35,7 +35,7 @@
           <div class="headingOfpassword">Saved Passwords:</div>
 
           <div class="profile-leftPasswords">
-            <%passwords.forEach((password)=>{ %>
+            <%passwords.reverse().forEach((password)=>{ %>
             <div class="passwordCard">
               <div class="siteName">
                 <p><%= password.siteName.split(".")[0]%></p>
@@ -53,24 +53,57 @@
           </div>
         </div>
         <div class="profile-right">
-          <div class="profileRightSitename">
-            <p>Google</p>
-            <div class="profileRightSitenameBtn">
-              <i class="ri-star-fill"></i>
-              <button>Edit</button>
+          <div class="savePasswordContainer">
+            <form id="saveDetailsForm" action="post">
+              <div class="saveSiteName">
+                <label for="siteName">Site Name:</label>
+                <input
+                  type="text"
+                  name="siteName"
+                  placeholder="Type Site Name"
+                />
+              </div>
+              <div class="saveUserName">
+                <label for="userName">Username:</label>
+                <input
+                  type="text"
+                  name="userName"
+                  placeholder="Type Username"
+                />
+              </div>
+              <div class="savePassword">
+                <label for="password">Password:</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Type Password"
+                />
+              </div>
+              <div class="saveButton">
+                <input type="submit" value="Save" />
+              </div>
+            </form>
+          </div>
+          <div class="ShowPasswordContainer">
+            <div class="profileRightSitename">
+              <p>Google</p>
+              <div class="profileRightSitenameBtn">
+                <i class="ri-star-fill"></i>
+                <button>Edit</button>
+              </div>
             </div>
-          </div>
-          <div class="siteuserName">
-            <p>Username / Email:</p>
-            <p>aditya@aditya.com</p>
-          </div>
-          <div class="sitePassword">
-            <p>Password:</p>
-            <p>aditya@aditya.com</p>
-          </div>
-          <div class="siteURL">
-            <p>Site URL:</p>
-            <p>aditya@aditya.com</p>
+            <div class="siteuserName">
+              <p>Username / Email:</p>
+              <p>aditya@aditya.com</p>
+            </div>
+            <div class="sitePassword">
+              <p>Password:</p>
+              <p>aditya@aditya.com</p>
+            </div>
+            <div class="siteURL">
+              <p>Site URL:</p>
+              <p>aditya@aditya.com</p>
+            </div>
           </div>
         </div>
       </div>
@@ -91,7 +124,6 @@
       });
 
       const showPasswordBoxes = document.querySelectorAll(".showPassword");
-      console.log(showPasswordBoxes);
       showPasswordBoxes.forEach((showPassword) => {
         showPassword.addEventListener("click", async (e) => {
           const response = await fetch(`/api/fetchOnePassword/${e.target.id}`);
@@ -119,22 +151,60 @@
           </div>
         `;
           const profileRightContainer = (document.querySelector(
-            ".profile-right"
+            ".ShowPasswordContainer"
           ).innerHTML = prfileRightContent);
         });
       });
 
       const copyPasswordBoxes = document.querySelectorAll(".copyPassword");
-      console.log(copyPasswordBoxes);
       copyPasswordBoxes.forEach((copyPassword) => {
         copyPassword.addEventListener("click", async (e) => {
           console.log(e.target.id);
           const response = await fetch(`/api/fetchOnePassword/${e.target.id}`);
           const data = await response.json();
           const text = data.password.password;
-          console.log(text)
+          console.log(text);
           navigator.clipboard.writeText(text).then(() => alert("Copied!"));
         });
+      });
+
+      const saveDetailsForm = document.querySelector("#saveDetailsForm");
+      saveDetailsForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const savedDetails = Object.fromEntries(new FormData(saveDetailsForm));
+        console.log(savedDetails.siteName);
+        newSavedDetails = {
+          siteName: savedDetails.siteName.split(".")[0],
+          userName: savedDetails.userName,
+          password: savedDetails.password,
+        };
+
+        const raw = document.querySelector(".userNameID").getAttribute(`id`);
+        const userID = raw.replace(/"/g, "");
+        console.log(`/api/savePassword/${userID}`);
+
+        const saveResponse = await fetch(`/api/savePassword/${userID}`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newSavedDetails),
+        });
+
+        const data = await saveResponse.json();
+
+        if (!saveResponse.ok) {
+          console.log(data);
+          alert(data.error ?? "Failed to save password");
+          window.location.reload();
+          return;
+        } else {
+          alert(data.message ?? "Password Saved!");
+
+          window.location.reload();
+          return;
+        }
+        window.location.reload;
       });
     </script>
   </body>
