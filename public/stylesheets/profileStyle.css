@@ -215,22 +215,22 @@
 .saveSiteName input,
 .saveUserName input,
 .savePassword input {
-    width: 75%;
-    height: 75%;
-    outline: none;
-    border: none;
-    font-size: 1.34rem;
-    padding: 1vh 1vw;
-    border-radius: 0.5vw;
-    color: var(--Primary-Text);
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    background-color: var(--secondary-color);
+  width: 75%;
+  height: 75%;
+  outline: none;
+  border: none;
+  font-size: 1.34rem;
+  padding: 1vh 1vw;
+  border-radius: 0.5vw;
+  color: var(--Primary-Text);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: var(--secondary-color);
 }
 
-.saveButton{
+.saveButton {
   justify-content: center;
 }
-.saveButton input{
+.saveButton input {
   padding: 0.6vh 1.5vw;
   border-radius: 25px;
   font-size: 1.6rem;
@@ -310,3 +310,63 @@
   font-size: 1.2rem;
   color: var(--Secondary-Text);
 }
+
+.companyLogo {
+  width: 20vw;
+  height: 24%;
+  gap: 2vw;
+  display: flex;
+}
+
+
+
+.logoImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.logoImg img {
+  height: 95%;
+}
+
+.logoName {
+  width: 60%;
+}
+
+.logoName p {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.companyCenter {
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  text-align: center;
+}
+
+.companyCenter h2 {
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+.companyCenter h4 {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.boilerPlateForCompanyLogo {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  height: 58%;
+  border-radius: 2vw;
+  padding: 4vh 0vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+

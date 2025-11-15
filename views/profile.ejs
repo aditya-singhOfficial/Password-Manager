@@ -105,6 +105,24 @@
               <p>aditya@aditya.com</p>
             </div>
           </div>
+          <div class="boilerPlateForCompanyLogo">
+            <div class="companyLogo">
+              <div class="logoImg">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3539/3539752.png"
+                  alt=""
+                />
+              </div>
+              <div class="logoName">
+                <p>password</p>
+                <p>manager</p>
+              </div>
+            </div>
+            <div class="companyCenter">
+              <h2>Transparent & Secured</h2>
+              <h4>Only you can see your personal data</h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -122,7 +140,7 @@
           window.location.reload();
         }
       });
-
+      document.querySelector(".ShowPasswordContainer").style.display = "None";
       const showPasswordBoxes = document.querySelectorAll(".showPassword");
       showPasswordBoxes.forEach((showPassword) => {
         showPassword.addEventListener("click", async (e) => {
@@ -153,6 +171,10 @@
           const profileRightContainer = (document.querySelector(
             ".ShowPasswordContainer"
           ).innerHTML = prfileRightContent);
+          document.querySelector(".ShowPasswordContainer").style.display =
+            "Initial";
+          document.querySelector(".boilerPlateForCompanyLogo").style.display =
+            "none";
         });
       });
 
@@ -174,7 +196,10 @@
         const savedDetails = Object.fromEntries(new FormData(saveDetailsForm));
         console.log(savedDetails.siteName);
         newSavedDetails = {
-          siteName: savedDetails.siteName.split(".")[0],
+          siteName:
+            savedDetails.siteName.toLowerCase().split(".")[0] === "www"
+              ? savedDetails.siteName.split(".")[1]
+              : savedDetails.siteName.split(".")[0],
           userName: savedDetails.userName,
           password: savedDetails.password,
         };
