@@ -89,7 +89,7 @@
               <p>Google</p>
               <div class="profileRightSitenameBtn">
                 <i class="ri-star-fill"></i>
-                <button>Edit</button>
+                <input type="submit" onclick="showEditCard()" value="Edit" />
               </div>
             </div>
             <div class="siteuserName">
@@ -123,6 +123,20 @@
               <h4>Only you can see your personal data</h4>
             </div>
           </div>
+          <div class="editPasswordContainer">
+            <div class="editSitename">
+              <p>Facebook</p>
+              <input type="submit" value="Save" />
+            </div>
+            <div class="editUsername">
+              <p>Username / Email:</p>
+              <input type="text" name="username" id="" />
+            </div>
+            <div class="editPassword">
+              <p>Password:</p>
+              <input type="text" name="password" id="" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -144,6 +158,8 @@
       const showPasswordBoxes = document.querySelectorAll(".showPassword");
       showPasswordBoxes.forEach((showPassword) => {
         showPassword.addEventListener("click", async (e) => {
+          document.querySelector(".editPasswordContainer").style.display =
+            "none";
           const response = await fetch(`/api/fetchOnePassword/${e.target.id}`);
           const data = await response.json();
           console.log(data.password.siteName);
@@ -152,7 +168,7 @@
             <p>${data.password.siteName.split(".")[0]}</p>
             <div class="profileRightSitenameBtn">
               <i class="ri-star-fill"></i>
-              <button>Edit</button>
+              <input type="submit" onclick="showEditCard()" value="Edit"/>
             </div>
           </div>
           <div class="siteuserName">
@@ -165,7 +181,7 @@
           </div>
           <div class="siteURL">
             <p>Site URL:</p>
-            <p>https://www.${data.password.siteName}</p>
+            <p>https://www.${data.password.siteName}.com</p>
           </div>
         `;
           const profileRightContainer = (document.querySelector(
@@ -231,6 +247,14 @@
         }
         window.location.reload;
       });
+
+      document.querySelector(".editPasswordContainer").style.display = "none";
+      const showEditCard = () => {
+        document.querySelector(".editPasswordContainer").style.display = "flex";
+        document.querySelector(".ShowPasswordContainer").style.display = "none";
+        document.querySelector(".boilerPlateForCompanyLogo").style.display =
+          "none";
+      };
     </script>
   </body>
 </html>

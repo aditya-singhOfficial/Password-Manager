@@ -276,7 +276,7 @@
   font-size: 1.6rem;
 }
 
-.profileRightSitenameBtn button {
+.profileRightSitenameBtn input {
   /* width: 40%; */
   padding: 0.7vh 1.2vw;
   background-color: #8b5cf6;
@@ -317,8 +317,6 @@
   gap: 2vw;
   display: flex;
 }
-
-
 
 .logoImg {
   display: flex;
@@ -370,3 +368,70 @@
   align-items: center;
 }
 
+.editPasswordContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4vh;
+  border: 1px solid var(--border-color);
+  height: 58%;
+  border-radius: 2vw;
+  padding: 2vh 2.8vw;
+}
+
+.editSitename {
+  display: flex;
+  justify-content: space-between;
+  height: 10%;
+  width: 100%;
+  padding: 5vh 0vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.9vh;
+  border-bottom: 2px solid var(--card-background-color);
+}
+
+.editSitename p {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.editSitename input:last-child {
+  /* width: 40%; */
+  padding: 0.7vh 1.2vw;
+  background-color: #8b5cf6;
+  color: var(--Primary-Text);
+  font-weight: 500;
+  font-size: 1.2rem;
+  outline: none;
+  border: none;
+  border-radius: 5vw;
+}
+
+.editUsername,
+.editPassword {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.editUsername p,
+.editPassword p {
+  font-size: 1.6rem;
+}
+
+.editUsername input,
+.editPassword input {
+  width: 75%;
+  height: 75%;
+  outline: none;
+  border: none;
+  font-size: 1.34rem;
+  padding: 1vh 1vw;
+  border-radius: 0.5vw;
+  color: var(--Primary-Text);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: var(--secondary-color);
+}
