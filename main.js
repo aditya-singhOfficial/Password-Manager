@@ -11,6 +11,7 @@ const forgetRoute = require("./routes/auth/forget.js")
 const logoutRoute = require("./routes/auth/logout.js")
 const savePasswordRoute = require("./routes/savePassword.js")
 const fetchPasswordRoute = require("./routes/fetchPassword.js")
+const editPasswordRoute = require("./routes/editSpecificPassword.js")
 const fetchSpecificPasswordRoute = require("./routes/fetchSpecificPassword.js")
 const isLoggedIn = require("./middlewares/isLoggedIN.js")
 const fetchPasswordServices = require("./services/fetchPassowrd.js");
@@ -53,6 +54,7 @@ app.use("/api/auth", logoutRoute);
 app.use("/api", savePasswordRoute);
 app.use("/api", fetchSpecificPasswordRoute);
 app.use("/api", fetchPasswordRoute);
+app.use("/api", editPasswordRoute);
 
 
 

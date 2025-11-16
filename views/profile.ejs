@@ -168,7 +168,9 @@
             <p>${data.password.siteName.split(".")[0]}</p>
             <div class="profileRightSitenameBtn">
               <i class="ri-star-fill"></i>
-              <input type="submit" onclick="showEditCard()" value="Edit"/>
+              <input class="editSavedDetails" id="${
+                e.target.id
+              }" type="submit" onclick="showEditCard()" value="Edit"/>
             </div>
           </div>
           <div class="siteuserName">
@@ -249,14 +251,72 @@
         window.location.reload;
       });
 
-      document.querySelector(".editPasswordContainer").style.display = "none";
-      const showEditCard = () => {
-        console.log("Clicked Show Edit");
-
-        document.querySelector(".editPasswordContainer").style.display = "flex";
+      const editPasswordContainer = document.querySelector(
+        ".editPasswordContainer"
+      );
+      editPasswordContainer.style.display = "none";
+      const showEditCard = async () => {
+        const raw = document
+          .querySelector(".editSavedDetails")
+          .getAttribute(`id`);
+        const userID = raw.replace(/"/g, "");
+        const response = await fetch(`/api/fetchOnePassword/${userID}`);
+        const data = await response.json();
+        const innerHtmlOfEditConatiner = `
+        <div class="editSitename">
+              <p id="siteNameId">${data.password.siteName}</p>
+              <input id=${userID} class="saveEditedDetails" type="submit" value="Save" onclick="saveEditedData()" />
+            </div>
+            <div class="editUsername">
+              <p>Username / Email:</p>
+              <input id="editUsernameID" type="text" name="username" id="" value=${data.password.userName} />
+            </div>
+            <div class="editPassword">
+              <p>Password:</p>
+              <input id="editPasswordID" type="text" name="password" id="" value=${data.password.password} />
+            </div>
+        `;
+        editPasswordContainer.innerHTML = innerHtmlOfEditConatiner;
+        editPasswordContainer.style.display = "flex";
         document.querySelector(".ShowPasswordContainer").style.display = "none";
         document.querySelector(".boilerPlateForCompanyLogo").style.display =
           "none";
+      };
+
+      const saveEditedData = async () => {
+        const saveEditedDetails = document.querySelector(".saveEditedDetails");
+        const raw = saveEditedDetails.getAttribute(`id`);
+        const userID = raw.replace(/"/g, "");
+        const editUsernameID = document.querySelector("#editUsernameID").value;
+        const editPasswordID = document.querySelector("#editPasswordID").value;
+        const siteNameId = document.querySelector("#siteNameId").textContent;
+
+        const newSavedDetails = {
+          siteName: siteNameId,
+          userName: editUsernameID,
+          password: editPasswordID,
+        };
+
+        console.log("data: ", newSavedDetails, " ", userID);
+
+        const response = await fetch(`/api/editpassword/${userID}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // credentials: "include",
+          body: JSON.stringify(newSavedDetails),
+        });
+        
+        const data = await response.json();
+        console.log(data);
+        if(!response.ok){
+          alert(data.error ?? "Failed to update username or password!")
+          // window.location.reload();
+          return;
+        }
+        window.location.reload();
+        return;
       };
     </script>
   </body>
