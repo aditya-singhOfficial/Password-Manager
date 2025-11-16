@@ -289,3 +289,96 @@ form {
     font-size: 1.24rem;
   }
 }
+
+@media (max-width: 1280px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .companyDetails {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .companyLogo {
+    width: fit-content;
+    gap: 4vw;
+  }
+
+  .logoImg img {
+    height: 75%;
+  }
+
+  .companyCenter {
+    width: fit-content;
+  }
+
+  .companyFooter a {
+    width: 37vw;
+  }
+
+  .formDiv {
+    width: 100vw;
+    padding-bottom: 5vh;
+  }
+
+  .formConatiner {
+    width: 95vw;
+    height: 65vh;
+  }
+
+  .formConatiner h1 {
+    margin-bottom: 2vh;
+    font-size: 2.5rem;
+  }
+
+  form {
+    height: 70%;
+  }
+
+  .formConatiner .formElem .formElemInput input {
+    padding: 2vh 7vw;
+  }
+
+  .formConatiner form a {
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    font-size: 1rem;
+    text-align: right;
+    margin-bottom: 2.5vh;
+  }
+
+  .formConatiner input[type="submit"] {
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5vw;
+    font-size: 1.35rem;
+    color: #fff;
+    font-weight: 900;
+    background-color: #e4aae2;
+    background: linear-gradient(to right, #3677e6, #3a79e5);
+    padding: 1vh 1vw;
+  }
+
+  .signUpContainer {
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+    flex-direction: column;
+  }
+
+  .signUpContainer p {
+    color: #5b575a;
+    font-size: 1.1rem;
+  }
+
+  .signUpContainer a {
+    text-decoration: none;
+    font-size: 1.24rem;
+  }
+}
