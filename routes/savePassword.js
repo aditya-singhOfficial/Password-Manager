@@ -1,4 +1,4 @@
-    const express = require("express");
+const express = require("express");
 const cookieParser = require("cookie-parser");
 const User = require("./../models/User")
 const jwt = require("jsonwebtoken")
@@ -8,14 +8,13 @@ Router.use(cookieParser());
 Router.use(express.json());
 Router.post("/savePassword/:id", isLoggedIn, async (req, res) => {
     try {
-        console.log(req.body);
 
-        const { siteName, userName, password } = req.body;
-        const { id } = req.params.id;
+        const { siteName, userName, password, userId } = req.body;
+
         if (!siteName || !userName || !password)
             return res.status(400).json({ error: `Incomplete Request`, success: false })
 
-        const userNameAlreadyExists = await PasswordModel.findOne({ siteName });
+        const userNameAlreadyExists = await PasswordModel.find({ siteName, user: userId });
         if (userNameAlreadyExists && userNameAlreadyExists.userName == userName)
             return res.status(400).json({ error: `This password for ${userName} already exists in DB`, success: false })
 
@@ -24,10 +23,11 @@ Router.post("/savePassword/:id", isLoggedIn, async (req, res) => {
             siteName,
             userName,
             password,
-            user: id
+            user: userId
         })
 
-        const userExists = await User.findOne({ id });
+        const userExists = await User.findOne({ _id: userId });
+
         userExists.savedPassword.push(passDb._id);
 
         userExists.save();

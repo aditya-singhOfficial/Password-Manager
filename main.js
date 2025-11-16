@@ -34,7 +34,8 @@ app.get("/signup", (req, res) => {
 app.get("/profile", isLoggedIn, async (req, res) => {
 
     const userAndPasswords = await fetchPasswordServices(req.user.email)
-
+    // console.log(userAndPasswords);
+    
     // TODO: fetch password from /api/fetchpassword
     res.render("profile", {
         name: userAndPasswords.name,
